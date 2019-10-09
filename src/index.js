@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SeasonDisplay from "./SeasonDisplay";
 
 
 class App extends React.Component {
+    state = {lat: null, errorMessage: ''};
 
-    constructor(props) {
-        super(props);
-
-        // the only time we do direct assignement
-        this.state = {lat: null, errorMessage: ''};
+    componentDidMount() {
+        console.log('component rendered to screen');
 
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -20,6 +19,10 @@ class App extends React.Component {
         );
     }
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log('my component was just updated - it rerendered')
+    // }
+
     render() {
 
 
@@ -28,7 +31,7 @@ class App extends React.Component {
         }
 
         if (!this.state.errorMessage && this.state.lat) {
-            return <div>Latitude: {this.state.lat}</div>
+            return <SeasonDisplay lat={this.state.lat}/>
         }
 
         return <div>Loading...</div>
